@@ -1,0 +1,25 @@
+[project]
+name = "npm-login"
+version = "0.1.0"
+description = "Simulates `npm login` command behavior with support for legacy authentication only"
+license = "MIT"
+readme = "README.md"
+authors = [
+    {name = "Vyacheslav Konovalov", email = "crabvk@protonmail.com"}
+]
+keywords = ["npm", "yarn", "node", "nodejs", "authentication", "login"]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3"
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/crabvk/npm-login"
+Repository = "https://github.com/crabvk/npm-login.git"
+
+[project.scripts]
+npm-login = "main:main"

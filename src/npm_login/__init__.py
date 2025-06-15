@@ -4,24 +4,19 @@ import argparse
 import json
 import re
 import ssl
+from importlib.metadata import version
 from pathlib import Path
 from urllib import request, parse
 from getpass import getpass
 from datetime import datetime, timezone
 from typing import NoReturn
+from logging import DEBUG, INFO
+from npm_login.logger import logger, green
 
 
 def error(message, exit_code=1) -> NoReturn:
-    print(f'\033[91mERROR: {message}\033[0m')
+    logger.error(message)
     exit(exit_code)
-
-
-def info(message):
-    print(f'INFO: {message}')
-
-
-def green(string):
-    return f'\033[92m{string}\033[0m'
 
 
 def read_value(prompt):
@@ -110,23 +105,29 @@ def write_npmrc(url, token):
     if not is_written:
         with open(file_path, 'a') as file:
             file.write(f'{content}\n')
-    info(f'{green(file_path)} updated successfully')
+    logger.info(f'{green(str(file_path))} updated successfully')
 
 
-def main():
+def cli():
     parser = argparse.ArgumentParser(description='Login to a registry user account')
     parser.add_argument(
-        '--registry', default='https://registry.npmjs.org/', help='the base URL of the npm registry'
+        '-r',
+        '--registry',
+        default='https://registry.npmjs.org/',
+        help='the base URL of the NPM registry',
     )
-    parser.add_argument('--debug', action='store_false', help='enable debugging mode')
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debugging mode')
+    parser.add_argument('-v', '--version', action='version', version=version('npm-login'))
     args = parser.parse_args()
+    logger.setLevel(DEBUG if args.debug else INFO)
+
     if args.debug:
         ssl._create_default_https_context = ssl._create_unverified_context
     if args.registry.strip() == '':
         error('Registry URL cannot be empty')
 
     URL = args.registry if args.registry.endswith('/') else f'{args.registry}/'
-    info(f'Log in on {green(URL)}')
+    logger.info(f'Log in on {green(URL)}')
     username = read_value('Username: ')
     validate_username(username)
     password = read_password()
@@ -148,4 +149,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    cli()

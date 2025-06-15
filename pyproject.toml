@@ -1,7 +1,7 @@
 [project]
 name = "npm-login"
-version = "0.1.0"
-description = "Simulates `npm login` command behavior with support for legacy authentication only"
+version = "0.1.1"
+description = "Simulates `npm login` command behavior with support only for legacy authentication"
 license = "MIT"
 readme = "README.md"
 authors = [
@@ -22,4 +22,8 @@ Homepage = "https://github.com/crabvk/npm-login"
 Repository = "https://github.com/crabvk/npm-login.git"
 
 [project.scripts]
-npm-login = "main:main"
+npm-login = "npm_login:cli"
+
+[build-system]
+requires = ["uv_build"]
+build-backend = "uv_build"

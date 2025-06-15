@@ -1,6 +1,6 @@
 [project]
 name = "npm-login"
-version = "0.1.1"
+version = "0.1.2"
 description = "Simulates `npm login` command behavior with support only for legacy authentication"
 license = "MIT"
 readme = "README.md"
